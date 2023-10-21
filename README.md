@@ -1,72 +1,61 @@
 # SYRIATEL CUSTOMER CHURN
-Author: Scholar Chepkirui
+Author: Sylvester Magunda
 
 
-## Project overview
-This project uses machine learning algorithms to build a model that can accurately predict customers who will churn based on the information available in the dataset. The dataset has 20 predictor variables mostly about customer usage patterns. The target variable is 'churn'. Since the target variable is a categorical variable, classification algorithms are used to build the predictive model. Recall is used to evaluate the model's performance.
+## Project Overview
+This project leverages machine learning algorithms to construct a predictive model that accurately identifies customers at risk of churning. The data was obtained from [Kaggle](https://www.kaggle.com/datasets/becksddf/churn-in-telecoms-dataset). It encompasses 20 predictor variables, primarily related to customer usage patterns, containing 3,333 records. Among these, 483 customers are categorized as churners, while the remaining 2,850 are non-churners. The model's objective is to classify the target variable "churn", leading to the application of classification algorithms. Model performance evaluation relies on the metric of recall. Generally, the best model is the decision tree with fine-tuned hyperparameters
 
-## Business problem¶
-For telecommunication companies to grow their revenue generating base, it is key to attract new customers and at the same time increase customer retention rate. Syriatel is a provider of mobile telecommunication and data services based in Damascus, Syria. It has established that long-term relationships with customers are more effective than trying to attract new customers. Churn prediction has therefore become a very important part of the company's strategy. This project aims to develop a model which accurately predicts customers who are most likely to churn, and identify the features that are important for predicting customer churn. Syriatel can thus act to prevent the customer who is likely to churn from actually churning.
+## Business Problem
+For telecommunications companies, expanding their revenue-generating base hinges on both acquiring new customers and improving customer retention rates. Among the most significant concerns for large enterprises is the issue of customer churn. Syriatel, a provider of mobile telecommunication and data services based in Damascus, Syria, offers a range of services encompassing calls, messaging, GSM, and internet services. The company has built a strong reputation by prioritizing customer satisfaction and social responsibility. Syriatel has recognized the effectiveness of nurturing long-term customer relationships over continually acquiring new customers. They understand that retaining a client is often more cost-effective than acquiring a new one. Consequently, churn prediction has become a pivotal component of the company's strategic initiatives. This project seeks to develop a model that accurately predicts customers most likely to churn while identifying the key features that contribute to this prediction. With this insight, Syriatel can take proactive measures to prevent potential churn among their customers.
 
 
-## Exploratory data analysis
-There is a class imbalance problem since the target class has an uneven distribution of observations. 85.51% of the data belongs to the False class while 14.49% belongs to the true class.
-![My image](Images/churn.png)
+## Data Understanding
+A class imbalance issue is noticed from the uneven distribution of observations within the target class. Specifically, 85.51% of the data pertains to the "False" class, while the "True" class comprises 14.49% of the dataset.
+<img src="./images/classimbalance.png"/>
 
-The scaling differs across the features, and a few of the features are not normally distributed. The features will therefore have to be scaled and normalized.
-![My image](Images/hist.png)
+The dataframe has both continuous and categorical variables.
 
-There is a very low correlation between most features.However, there is a perfect positive correlation between total charge and total minutes at different times. This is expected since the charge of a call depends on the length of the call in minutes.<br>
-total day minutes, total day charge and customer service calls have a weak positive correlation with churn. The other features have a negligible correlation with churn, approximately 0.
-![My image](Images/corr.png)
+Scaling varies among the features, and some of them do not exhibit a normal distribution. Consequently, it is necessary to perform both scaling and normalization on the features.
+<img src="./images/distribution.png"/>
 
-## Data preparation for Machine Learning
-- Multicollinearity of features: columns showing total charge at different times are dropped to address the multicollinearity<br>
-- Train-test split: Data is split into train and test sets.<br>
-- Transform categorical variables: dummy variables are created for categorical features.<br>
-- SMOTE: SMOTE is used to handle class imbalance problems by oversampling the minority class with replacement.<br>
-The pie chart below shows the distribution of target variable after applying SMOTE.<br>
-![My image](Images/churn_2.png)
+Most features exhibit a notably weak correlation with each other.
+Nonetheless, a perfect positive correlation is observed between specific pairs of variables: total evening charge and total evening minutes, total day charge and total day minutes, total night charge and total night minutes, and total international charge and total international minutes. This correlation is anticipated since the charge of a call is inherently influenced by the call's duration in minutes. To address multicollinearity, it will be necessary to eliminate one variable from each correlated pair.
+<img src="./images/corr.png"/>
+
+## Data Preparation for Machine Learning
+- To mitigate multicollinearity among features, columns displaying total charges at various times are removed from the dataset.
+- The dataset is divided into training and testing subsets using a train-test split.
+- Categorical variables are converted into dummy variables to prepare them for modeling.
+- Addressing class imbalance, Synthetic Minority Over-sampling Technique (SMOTE) is applied to oversample the minority class by generating synthetic examples with replacement.
 
 
 ## Modeling
-Various models are created using logistic regression, decision tree and random forest algorithms. Hyperparameter tuning is applied to ldecision tree and random forest algorithms.<br>
-A pipeline is used to prevent data leakage. Data is scaled in the pipeline.<br>
-The image below shows a summary of the models and their performance.
-![My image](Images/modeling.png)
+Multiple models are constructed including: logistic regression, k-nearest neighbors, decision tree, and random forest. The hyperparameter tuning process is employed for the decision tree to create the best model. To safeguard against data leakage, a pipeline is implemented, ensuring that data scaling takes place seamlessly within the pipeline.
 
 ## Evaluation
-Decision tree with tuned hyperparameters is the model with the best performance. It has the highest recall score. The accuracy and precision scores are above average.<br>
-However, the recall score achieved is below the set score of at least 85%.<br>
-The feature importance of the best model is shown below.
-![My image](Images/feat_importance.png)
+The decision tree model with fine-tuned hyperparameters exhibits superior performance, boasting the highest recall score, with accuracy and precision scores surpassing the mean values.<br>
+However, it's worth noting that the achieved recall score falls slightly below the set threshold of at least 85%.<br>
+Below, you can find the feature importance of this top-performing model.
+<img src="./images/evaluation.png"/>
 
-## Conclusions and recommendations
-The final model that will be used to predict customer churn is the decision tree with tuned hyperparameters.This model results in the lowest number of false negatives.
-The most important features for predicting customer churn are:
-- total day minutes: total number of minutes the customer has been in calls during the day
-- total evening minutes: total number of minutes the customer has been in calls during the evening
-- customer service calls: number of calls the customer has made to customer service
-- total international minutes: total number of minutes the user has been in international calls
-Syriatel should ensure effective customer service so as to meet customers' expectations and analyze customer interactions. They can then follow up on both positive and negative feedbacks received.<br>
-The more the number of minutes the customer spends on the phone, the higher the likelihood of not churning. The company should look into the call charge rates in comparison to the competitors, and consider if they should lower the charges of calls per minute. This can prevent other customers from churning.
+## Conclusions and Recommendations
+The chosen model for predicting customer churn is the decision tree with fine-tuned hyperparameters, boasting the lowest count of false negatives.
 
-## Next steps
-The targeted recall score of 85% is not achieved by the best performing model. There is still some overfitting in the model irregardless of hyperparameter tuning.
-The training data size should be increased to reduce overfitting and hence improve model performance.
+The key features crucial for forecasting customer churn are as follows:
+- Total day minutes: Reflecting the cumulative minutes spent by the customer on daytime calls.
+- Total evening minutes: Summing up the minutes spent on evening calls by the customer.
+- Customer service calls: Signifying the number of calls the customer has initiated to reach customer service.
+
+To meet customer expectations effectively and assess customer interactions, Syriatel should ensure a robust customer service strategy. This entails tracking and addressing both positive and negative feedback received from customers.
+
+Furthermore, the correlation reveals that customer service calls has the highest correlation with churn implying that the more times a customer initiates a call to reach customer service the more likely they are to churn. Therefore, Syriatel should always ensure that they solve the issues raised by clients who call.
+
+Since total day and night minutes are among the key factors for predicting churning, the company should assess its call charge rates in comparison to competitors. Lowering the charges per minute for calls could prove instrumental in retaining customers and preventing churn.
+
+## Next Steps
+Despite the hyperparameter tuning, the best-performing model falls short of the desired 85% recall score. Overfitting remains a challenge in the model's performance. To mitigate this overfitting issue and enhance the model's effectiveness, it is advisable to increase the size of the training dataset.
 
 ##  For More Information
-See the full analysis in the [Jupyter Notebook](https://github.com/Scholarchep/Syriatel-customer-churn/blob/main/customer_churn.ipynb) or review this [presentation](https://github.com/Scholarchep/Syriatel-customer-churn/blob/main/presentation.pdf)
+See the full analysis in the [Jupyter Notebook](https://github.com/SylvesterMagunda/syriatel-customer-churn/blob/main/syriatel-customer_churn.ipynb) or review this [presentation](https://github.com/SylvesterMagunda/syriatel-customer-churn/blob/main/customer-churn-presentation.pdf)
 .
-For additional information, contact Scholar Chepkirui at scholarchepkirui@gmail.com
-
-
-## Repository Structure
-<<<<<<< HEAD
-
-├── Images                                    <- Both sourced externally and generated from code
-├── Data                                      <- Both sourced externally and generated from code
-├── README.md                                 <- The top-level README for reviewers of this project
-├── presentation.pdf                          <- PDF version of project presentation
-└── customer_churn.ipynb                      <- Narrative documentation of analysis in Jupyter notebook
-
+For additional information, contact Sylvester Magunda at sylvestermagunda@gmail.com
