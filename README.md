@@ -56,6 +56,6 @@ Since total day and night minutes are among the key factors for predicting churn
 Despite the hyperparameter tuning, the best-performing model falls short of the desired 85% recall score. Overfitting remains a challenge in the model's performance. To mitigate this overfitting issue and enhance the model's effectiveness, it is advisable to increase the size of the training dataset.
 
 ##  For More Information
-See the full analysis in the [Jupyter Notebook](https://github.com/SylvesterMagunda/syriatel-customer-churn/blob/main/syriatel-customer_churn.ipynb) or review this [presentation](https://github.com/SylvesterMagunda/syriatel-customer-churn/blob/main/customer-churn-presentation.pdf)
+See the full analysis in the [Jupyter Notebook](https://github.com/SylvesterMagunda/syriatel-customer-churn/blob/main/syriatel-customer-churn.ipynb) or review this [presentation](https://github.com/SylvesterMagunda/syriatel-customer-churn/blob/main/customer-churn-presentation.pdf)
 .
 For additional information, contact Sylvester Magunda at sylvestermagunda@gmail.com
